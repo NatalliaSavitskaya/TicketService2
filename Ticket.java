@@ -7,6 +7,7 @@ public class Ticket
     private boolean isPromo;
     private char stadiumSector;
     private float maxWeight;
+    double price;
 
     public Ticket() {
     }
@@ -17,7 +18,8 @@ public class Ticket
         this.unixTimeStamp = unixTimeStamp;
     }
 
-    public Ticket(String idTicket, String concertHall, int eventCode, long unixTimeStamp, boolean isPromo, char stadiumSector, float maxWeight){
+    public Ticket(String idTicket, String concertHall, int eventCode, long unixTimeStamp, boolean isPromo,
+                  char stadiumSector, float maxWeight, double price){
         if (idTicket.length() > 4) {
             throw new IllegalArgumentException("ID cannot be longer than 4 characters.");
         }
@@ -34,6 +36,7 @@ public class Ticket
         this.isPromo = isPromo;
         this.stadiumSector = stadiumSector;
         this.maxWeight = maxWeight;
+        this.price = price;
     }
 
     public void printTicket(){
@@ -44,5 +47,6 @@ public class Ticket
         System.out.println("This is a promo ticket: " + isPromo);
         System.out.println("The stadium sector is: " + stadiumSector);
         System.out.println("Max allowed backpack weight (kg.g): " + maxWeight);
+        System.out.println("The price of the ticket is: " + price);
     }
 }
