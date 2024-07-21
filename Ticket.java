@@ -7,7 +7,7 @@ public class Ticket
     private boolean isPromo;
     private char stadiumSector;
     private float maxWeight;
-    double price;
+    private double price;
 
     public Ticket() {
     }
