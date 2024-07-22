@@ -2,10 +2,10 @@ import java.util.Random;
 
 public class Ticket
 {
-    private String idTicket;
+    private String id;
     private String concertHall;
     private int eventCode;
-    private long unixTimeStamp;
+    private long creationTime;
     private boolean isPromo;
     private char stadiumSector;
     private float maxWeight;
@@ -15,23 +15,23 @@ public class Ticket
     private static final Random RANDOM = new Random();
 
     public Ticket() {
-        this.idTicket = generateID();
-        this.unixTimeStamp = System.currentTimeMillis()/1000L;
+        this.id = generateID();
+        this.creationTime = System.currentTimeMillis()/1000L;
     }
 
-    public Ticket(String concertHall, int eventCode, long unixTimeStamp){
-        this.idTicket = generateID();
+    public Ticket(String concertHall, int eventCode, long creationTime){
+        this.id = generateID();
         this.concertHall = concertHall;
         this.eventCode = eventCode;
-        this.unixTimeStamp = unixTimeStamp;
+        this.creationTime = creationTime;
     }
 
-    public Ticket(String concertHall, int eventCode, long unixTimeStamp, boolean isPromo,
+    public Ticket(String concertHall, int eventCode, long creationTime, boolean isPromo,
                   char stadiumSector, float maxWeight, double price){
-        this.idTicket = generateID();
+        this.id = generateID();
         this.concertHall = concertHall;
         this.eventCode = eventCode;
-        this.unixTimeStamp = unixTimeStamp;
+        this.creationTime = creationTime;
         this.isPromo = isPromo;
         this.stadiumSector = stadiumSector;
         this.maxWeight = maxWeight;
@@ -42,8 +42,8 @@ public class Ticket
         if (concertHall.length() > 10) {
             throw new IllegalArgumentException("Concerthall cannot be longer than 10 characters.");
         }
-        if ( (int) Math.floor(Math.log10(Math.abs(eventCode))) != 2) {
-            throw new IllegalArgumentException("Eventcode must consist of 3 integers.");
+        if ((eventCode>999)||(eventCode<0)) {
+            throw new IllegalArgumentException("Eventcode must be positive and consist of 3 integers.");
         }
     }
 
@@ -56,10 +56,10 @@ public class Ticket
     }
 
     public String toString() {
-        return "Ticket ID is:'" + idTicket +
+        return "Ticket ID is:'" + id +
                 ", concert hall is: " + concertHall +
                 ", eventcode is: " + eventCode +
-                ", ticket creation time is: " + unixTimeStamp +
+                ", ticket creation time is: " + creationTime +
                 ", ticket promo is: " + isPromo +
                 ", stadium sector is: " + stadiumSector +
                 ", max allowed backpack weight (kg.g): " + maxWeight +
