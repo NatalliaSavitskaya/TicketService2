@@ -5,14 +5,10 @@ class TicketService
         Ticket emptyTicket = new Ticket();
         System.out.println("The info about the empty ticket is:" + emptyTicket.toString());
 
-        String concertHall = "Alexandria";
-        int eventCode = 123;
-        long creationTime = System.currentTimeMillis()/1000L;
-        Ticket limitedTicket = new Ticket(concertHall, eventCode, creationTime);
-        limitedTicket.ticketValidation();
+        Ticket limitedTicket = new Ticket("Alexandria", "012", System.currentTimeMillis()/1000L);
         System.out.println("The info about the limited ticket is: " + limitedTicket.toString());
 
-        Ticket fullTicket = new Ticket(concertHall, eventCode, creationTime, true, 'A', 55.95F, 12.34);
+        Ticket fullTicket = new Ticket("Alexandria", "012", System.currentTimeMillis()/1000L, true, 'A', 100, 12);
         fullTicket.ticketValidation();
         System.out.println("The info about the full ticket is: " + fullTicket.toString());
     }
