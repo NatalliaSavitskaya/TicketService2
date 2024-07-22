@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Ticket
 {
     private String idTicket;
@@ -9,28 +11,25 @@ public class Ticket
     private float maxWeight;
     private double price;
 
+    private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    private static final Random RANDOM = new Random();
+
     public Ticket() {
+        this.idTicket = generateID();
+        this.unixTimeStamp = System.currentTimeMillis()/1000L;
     }
 
     public Ticket(String concertHall, int eventCode, long unixTimeStamp){
+        this.idTicket = generateID();
         this.concertHall = concertHall;
         this.eventCode = eventCode;
         this.unixTimeStamp = unixTimeStamp;
     }
 
-    public Ticket(String idTicket, String concertHall, int eventCode, long unixTimeStamp, boolean isPromo,
+    public Ticket(String concertHall, int eventCode, long unixTimeStamp, boolean isPromo,
                   char stadiumSector, float maxWeight, double price){
-        if (idTicket.length() > 4) {
-            throw new IllegalArgumentException("ID cannot be longer than 4 characters.");
-        }
-        this.idTicket = idTicket;
-        if (concertHall.length() > 10) {
-            throw new IllegalArgumentException("Concerthall cannot be longer than 10 characters.");
-        }
+        this.idTicket = generateID();
         this.concertHall = concertHall;
-        if ( (int) Math.floor(Math.log10(Math.abs(eventCode))) != 2) {
-            throw new IllegalArgumentException("Eventcode must consist of 3 integers.");
-        }
         this.eventCode = eventCode;
         this.unixTimeStamp = unixTimeStamp;
         this.isPromo = isPromo;
@@ -39,14 +38,31 @@ public class Ticket
         this.price = price;
     }
 
-    public void printTicket(){
-        System.out.println("Ticket ID: " + idTicket);
-        System.out.println("The concert hall is: " + concertHall);
-        System.out.println("The event code is: " + eventCode);
-        System.out.println("The ticket creation time is: " + unixTimeStamp);
-        System.out.println("This is a promo ticket: " + isPromo);
-        System.out.println("The stadium sector is: " + stadiumSector);
-        System.out.println("Max allowed backpack weight (kg.g): " + maxWeight);
-        System.out.println("The price of the ticket is: " + price);
+    public void ticketValidation(){
+        if (concertHall.length() > 10) {
+            throw new IllegalArgumentException("Concerthall cannot be longer than 10 characters.");
+        }
+        if ( (int) Math.floor(Math.log10(Math.abs(eventCode))) != 2) {
+            throw new IllegalArgumentException("Eventcode must consist of 3 integers.");
+        }
+    }
+
+    private String generateID(){
+        StringBuilder id = new StringBuilder(4);
+        for (int i = 0; i < 4; i++) {
+            id.append(CHARACTERS.charAt(RANDOM.nextInt(CHARACTERS.length())));
+        }
+        return id.toString();
+    }
+
+    public String toString() {
+        return "Ticket ID is:'" + idTicket +
+                ", concert hall is: " + concertHall +
+                ", eventcode is: " + eventCode +
+                ", ticket creation time is: " + unixTimeStamp +
+                ", ticket promo is: " + isPromo +
+                ", stadium sector is: " + stadiumSector +
+                ", max allowed backpack weight (kg.g): " + maxWeight +
+                ", price=" + price;
     }
 }
